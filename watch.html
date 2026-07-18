@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VideoTube - Tonton</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+.watch{
+    margin-top:60px;
+}
+
+.player video{
+    width:100%;
+    background:#000;
+}
+
+.video-detail{
+    background:#fff;
+    padding:15px;
+}
+
+.video-detail h2{
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.video-detail p{
+    color:#666;
+    margin-bottom:15px;
+}
+
+.action{
+    display:flex;
+    justify-content:space-around;
+    padding:15px 0;
+    border-top:1px solid #eee;
+    border-bottom:1px solid #eee;
+    margin-bottom:15px;
+}
+
+.action button{
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.channel{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.channel-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.channel-left img{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+}
+
+.subscribe{
+    background:#ff0000;
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.comments{
+    margin-top:10px;
+    background:#fff;
+    padding:15px;
+}
+
+.comment{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.recommend{
+    padding:10px;
+}
+
+.rec-card{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+    cursor:pointer;
+}
+
+.rec-card img{
+    width:150px;
+    border-radius:8px;
+}
+
+.rec-info h4{
+    margin-bottom:5px;
+}
+
+.rec-info p{
+    color:#666;
+    font-size:13px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+<i class="fa-solid fa-play"></i>
+<span>VideoTube</span>
+</div>
+
+</header>
+
+<section class="watch">
+
+<div class="player">
+
+<video id="videoPlayer" controls autoplay poster="https://picsum.photos/800/450">
+Browser tidak mendukung video.
+</video>
+
+</div>
+
+<div class="video-detail">
+
+<h2 id="judulVideo">Judul Video</h2>
+
+<p id="infoVideo">125.000 x ditonton • 2 hari lalu</p>
+
+<div class="action">
+
+<button><i class="fa-regular fa-thumbs-up"></i> Like</button>
+
+<button><i class="fa-solid fa-share"></i> Share</button>
+
+<button><i class="fa-regular fa-bookmark"></i> Simpan</button>
+
+</div>
+
+<div class="channel">
+
+<div class="channel-left">
+
+<img src="https://picsum.photos/80">
+
+<div>
+
+<b>VideoTube</b><br>
+
+<small>1,2 Juta Subscriber</small>
+
+</div>
+
+</div>
+
+<button class="subscribe">Subscribe</button>
+
+</div>
+
+</div>
+
+<div class="comments">
+
+<h3>Komentar</h3>
+
+<div class="comment">
+<b>Andi</b><br>
+Videonya keren 👍
+</div>
+
+<div class="comment">
+<b>Budi</b><br>
+Mantap kualitas HD.
+</div>
+
+<div class="comment">
+<b>Siti</b><br>
+Semoga upload terus.
+</div>
+
+</div>
+
+<div class="recommend">
+
+<h3>Video Rekomendasi</h3>
+
+<div class="rec-card">
+<img src="https://picsum.photos/250/150?1">
+<div class="rec-info">
+<h4>Video Seru 1</h4>
+<p>80 rb x ditonton</p>
+</div>
+</div>
+
+<div class="rec-card">
+<img src="https://picsum.photos/250/150?2">
+<div class="rec-info">
+<h4>Video Seru 2</h4>
+<p>57 rb x ditonton</p>
+</div>
+</div>
+
+<div class="rec-card">
+<img src="https://picsum.photos/250/150?3">
+<div class="rec-info">
+<h4>Video Seru 3</h4>
+<p>100 rb x ditonton</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+// Mengambil nama video dari URL
+const params = new URLSearchParams(window.location.search);
+
+const video = params.get("video");
+
+const player = document.getElementById("videoPlayer");
+
+if(video){
+
+    player.src = video;
+
+}
+
+// Tombol Subscribe
+const subscribe = document.querySelector(".subscribe");
+
+subscribe.onclick = function(){
+
+    if(this.textContent=="Subscribe"){
+
+        this.textContent="Subscribed";
+        this.style.background="#555";
+
+    }else{
+
+        this.textContent="Subscribe";
+        this.style.background="#ff0000";
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
