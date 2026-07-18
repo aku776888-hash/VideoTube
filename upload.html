@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Video - VideoTube</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+<h1>Upload Video</h1>
+</header>
+
+<div class="upload-box">
+
+<input type="file" id="videoFile" accept="video/mp4">
+
+<input type="text" id="title" placeholder="Judul Video">
+
+<button onclick="uploadVideo()">
+Upload
+</button>
+
+<p id="status"></p>
+
+</div>
+
+<script src="upload.js"></script>
+
+</body>
+</html>
