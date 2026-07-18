@@ -1,10 +1,10 @@
 // ================= BANNER =================
 
 const banners = [
-    "https://picsum.photos/900/400?1",
-    "https://picsum.photos/900/400?2",
-    "https://picsum.photos/900/400?3",
-    "https://picsum.photos/900/400?4"
+"https://picsum.photos/900/400?1",
+"https://picsum.photos/900/400?2",
+"https://picsum.photos/900/400?3",
+"https://picsum.photos/900/400?4"
 ];
 
 let bannerIndex = 0;
@@ -12,82 +12,80 @@ const banner = document.querySelector(".banner img");
 
 setInterval(() => {
 
-    bannerIndex++;
+bannerIndex = (bannerIndex + 1) % banners.length;
 
-    if (bannerIndex >= banners.length) {
-        bannerIndex = 0;
-    }
+banner.style.opacity = "0";
 
-    banner.style.opacity = "0";
+setTimeout(() => {
+banner.src = banners[bannerIndex];
+banner.style.opacity = "1";
+},300);
 
-    setTimeout(() => {
-        banner.src = banners[bannerIndex];
-        banner.style.opacity = "1";
-    }, 300);
+},4000);
 
-}, 4000);
+// ================= LOAD VIDEO =================
 
-// ================= KATEGORI =================
+async function loadVideos(){
 
-const categoryButtons = document.querySelectorAll(".categories button");
+const container = document.querySelector(".videos");
 
-categoryButtons.forEach(button => {
+const { data, error } = await supabase
+.from("videos")
+.select("*")
+.order("created_at",{ascending:false});
 
-    button.addEventListener("click", () => {
+if(error){
+console.log(error);
+return;
+}
 
-        categoryButtons.forEach(btn => btn.classList.remove("active"));
+container.innerHTML = "";
 
-        button.classList.add("active");
+data.forEach(video=>{
 
-    });
+container.innerHTML += `
+<a href="${video.video_url}" class="video-link" target="_blank">
+
+<div class="video-card">
+
+<div class="thumb">
+<video src="${video.video_url}" controls></video>
+</div>
+
+<div class="video-info">
+
+<div class="video-text">
+<h3>${video.title}</h3>
+<p>${video.description}</p>
+</div>
+
+</div>
+
+</div>
+
+</a>
+`;
 
 });
+
+}
+
+loadVideos();
 
 // ================= PENCARIAN =================
 
 const searchInput = document.getElementById("searchInput");
-const searchBtn = document.getElementById("searchBtn");
 
-searchBtn.addEventListener("click", cariVideo);
+searchInput.addEventListener("input",()=>{
 
-searchInput.addEventListener("keypress", function(e){
+const keyword = searchInput.value.toLowerCase();
 
-    if(e.key === "Enter"){
+document.querySelectorAll(".video-link").forEach(item=>{
 
-        cariVideo();
+const title=item.querySelector("h3").textContent.toLowerCase();
 
-    }
+item.style.display=title.includes(keyword)?"block":"none";
 
 });
-
-function cariVideo(){
-
-    const keyword = searchInput.value.toLowerCase();
-
-    document.querySelectorAll(".video-link").forEach(item => {
-
-        const title = item.querySelector("h3").textContent.toLowerCase();
-
-        if(title.includes(keyword)){
-
-            item.style.display = "block";
-
-        }else{
-
-            item.style.display = "none";
-
-        }
-
-    });
-
-}
-
-// ================= NOTIFIKASI =================
-
-const bell = document.querySelector(".fa-bell");
-
-bell.addEventListener("click", () => {
-
-    alert("Belum ada notifikasi.");
 
 });
