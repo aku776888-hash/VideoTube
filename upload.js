@@ -1,41 +1,63 @@
-function uploadVideo() {
+async function uploadVideo() {
 
-const file = document.getElementById("videoFile").files[0];
-const title = document.getElementById("title").value;
-const description = document.getElementById("description").value;
+    const file = document.getElementById("videoFile").files[0];
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const status = document.getElementById("status");
 
-if (!file) {
-alert("Silakan pilih video.");
-return;
-}
+    if (!file) {
+        alert("Silakan pilih video.");
+        return;
+    }
 
-if (title.trim() === "") {
-alert("Masukkan judul video.");
-return;
-}
+    if (title.trim() === "") {
+        alert("Masukkan judul video.");
+        return;
+    }
 
-const video = {
-title: title,
-description: description,
-fileName: file.name,
-date: new Date().toLocaleString()
-};
+    status.innerHTML = "⏳ Sedang mengupload...";
 
-let videos = JSON.parse(localStorage.getItem("videos")) || [];
+    const fileName = Date.now() + "_" + file.name;
 
-videos.unshift(video);
+    // Upload ke Storage
+    const { error: uploadError } = await supabase.storage
+        .from("videos")
+        .upload(fileName, file);
 
-localStorage.setItem("videos", JSON.stringify(videos));
+    if (uploadError) {
+        status.innerHTML = "❌ Upload gagal!";
+        console.log(uploadError);
+        return;
+    }
 
-document.getElementById("status").innerHTML =
-"✅ Video berhasil ditambahkan.";
+    // Ambil URL video
+    const { data } = supabase.storage
+        .from("videos")
+        .getPublicUrl(fileName);
 
-document.getElementById("title").value = "";
-document.getElementById("description").value = "";
-document.getElementById("videoFile").value = "";
+    const videoUrl = data.publicUrl;
 
-setTimeout(() => {
-window.location.href = "index.html";
-}, 1500);
+    // Simpan ke Database
+    const { error: dbError } = await supabase
+        .from("videos")
+        .insert([
+            {
+                title: title,
+                description: description,
+                video_url: videoUrl
+            }
+        ]);
+
+    if (dbError) {
+        status.innerHTML = "❌ Gagal menyimpan database!";
+        console.log(dbError);
+        return;
+    }
+
+    status.innerHTML = "✅ Upload berhasil!";
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 1500);
 
 }
