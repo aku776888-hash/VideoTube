@@ -1,25 +1,41 @@
 function uploadVideo() {
 
-    const file = document.getElementById("videoFile").files[0];
-    const title = document.getElementById("title").value;
+const file = document.getElementById("videoFile").files[0];
+const title = document.getElementById("title").value;
+const description = document.getElementById("description").value;
 
-    if (!file) {
-        alert("Pilih video!");
-        return;
-    }
+if (!file) {
+alert("Silakan pilih video.");
+return;
+}
 
-    const url = URL.createObjectURL(file);
+if (title.trim() === "") {
+alert("Masukkan judul video.");
+return;
+}
 
-    let videos = JSON.parse(localStorage.getItem("videos")) || [];
+const video = {
+title: title,
+description: description,
+fileName: file.name,
+date: new Date().toLocaleString()
+};
 
-    videos.push({
-        title: title,
-        video: url
-    });
+let videos = JSON.parse(localStorage.getItem("videos")) || [];
 
-    localStorage.setItem("videos", JSON.stringify(videos));
+videos.unshift(video);
 
-    alert("Video berhasil ditambahkan!");
+localStorage.setItem("videos", JSON.stringify(videos));
 
-    window.location.href = "index.html";
+document.getElementById("status").innerHTML =
+"✅ Video berhasil ditambahkan.";
+
+document.getElementById("title").value = "";
+document.getElementById("description").value = "";
+document.getElementById("videoFile").value = "";
+
+setTimeout(() => {
+window.location.href = "index.html";
+}, 1500);
+
 }
