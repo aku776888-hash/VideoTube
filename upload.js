@@ -1,22 +1,25 @@
 function uploadVideo() {
 
-const file = document.getElementById("videoFile").files[0];
-const title = document.getElementById("title").value;
+    const file = document.getElementById("videoFile").files[0];
+    const title = document.getElementById("title").value;
 
-if (!file) {
-    alert("Silakan pilih video MP4.");
-    return;
-}
+    if (!file) {
+        alert("Pilih video!");
+        return;
+    }
 
-if (title.trim() === "") {
-    alert("Masukkan judul video.");
-    return;
-}
+    const url = URL.createObjectURL(file);
 
-document.getElementById("status").innerHTML =
-"✅ Video '" + title + "' siap diupload.";
+    let videos = JSON.parse(localStorage.getItem("videos")) || [];
 
-console.log("Judul:", title);
-console.log("File:", file);
+    videos.push({
+        title: title,
+        video: url
+    });
 
+    localStorage.setItem("videos", JSON.stringify(videos));
+
+    alert("Video berhasil ditambahkan!");
+
+    window.location.href = "index.html";
 }
