@@ -3,26 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Upload Video - VideoTube</title>
+
 <link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 <body>
 
 <header class="header">
-<h1>Upload Video</h1>
+
+<div class="logo">
+<i class="fa-solid fa-play"></i>
+<span>VideoTube</span>
+</div>
+
+<div class="header-menu">
+<a href="index.html">
+<i class="fa-solid fa-house"></i>
+</a>
+</div>
+
 </header>
 
-<div class="upload-box">
+<div class="upload-container">
 
-<input type="file" id="videoFile" accept="video/mp4">
+<div class="upload-card">
 
-<input type="text" id="title" placeholder="Judul Video">
+<h2>Upload Video Baru</h2>
 
-<button onclick="uploadVideo()">
-Upload
+<label class="upload-label">
+
+<input
+type="file"
+id="videoFile"
+accept="video/mp4"
+hidden>
+
+<i class="fa-solid fa-cloud-arrow-up"></i>
+
+<p>Pilih Video MP4</p>
+
+</label>
+
+<input
+type="text"
+id="title"
+placeholder="Masukkan judul video">
+
+<textarea
+id="description"
+placeholder="Deskripsi video..."
+rows="5"></textarea>
+
+<button
+class="upload-btn"
+onclick="uploadVideo()">
+
+<i class="fa-solid fa-upload"></i>
+
+Upload Video
+
 </button>
 
 <p id="status"></p>
+
+</div>
 
 </div>
 
